@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<title>Dancing Robot</title>
+		<style>
+			body { background-color: #eeeeee; }		
+			
+			canvas, p {
+				margin: auto;
+				display: block;
+				text-align: center;
+			}
+			
+			canvas {
+				border: solid;
+				border-color: white;			
+			}
+		</style>
+	</head>
+	
+	<body>
+		<!-- Importando minha engine pessoal -->
+		<script type="text/javascript" src="https://hermespasser.github.io/p/ramu/ramu-0.7b.js"></script>
+		<script type="text/javascript">
+			Ramu.init(80, 90);
+						
+			// Eu iria colocar uma música minha mas o soundcloud complicou, então fica com essa
+			let funnyaudio = new Ramu.Audio('https://archive.org/download/Q2_COMEDYCARTOON/clockwork_clowns.ogg');
+			let t = new Text("", 15, 15, 100, 20);
+			let stindex = 0;
+			let poses = [
+				"    (Ö_Ö) \n    O⍠O \n       ⍞  \n       / \\",
+				"    ( -_Ö) \n   O-⍠—O \n       ⍞ \n       / \\",
+				"    ( -_- ) \n    O⍠/—-O \n       ⍞ \n       / \\",
+				"    ( Ö_- ) \n    O⍠/—O \n       ⍞ \n       / \\"
+			];
+
+			let time = 2;
+			let current = 0;
+
+			new GameObj().update = function(){
+				if (!funnyaudio.isPlaying) // tenta dar play() já que é preciso alguma interação do usuário ele vai tentando até ter, also isso faz tocar em loop
+					funnyaudio.play();
+					
+				current += Ramu.time.delta;
+				if (current < time){
+					return;
+				}
+
+				current = 0;
+				t.text = poses[stindex % poses.length];
+				stindex++;
+			};
+		</script>
+		<p>Fiz em C e depois resolvi brincar com HTML para faze-lo dançar.</p>
+	</body>
+</html> 
